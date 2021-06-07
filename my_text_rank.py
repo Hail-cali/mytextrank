@@ -114,14 +114,14 @@ class SimpleTextRank(object):
 
         result = sorted(tr, key=lambda x: x[1], reverse=True)
 
-        return result[:5]
+        return result[:15]
 
     def network_process(self,text):
         dsents = self._word_tokenize(text)
         nodes, tokens = self.build_keywords(dsents)
         self._network_make_graph(nodes, tokens)
         result = self.network_score()
-        return result[:5]
+        return result[:10]
 
     def _network_make_graph(self, n, t):
         self.graph_treform.add_nodes_from(list(set(n)))  # node 등록
@@ -201,7 +201,7 @@ class SimpleTextRank(object):
             #pr = np.transpose(pr)
             pr = (1-d) * d * np.dot(g, pr)
 
-        textrank = zip(label, pr)
+        textrank = zip(label, np.exp(pr))
 
 
         return textrank

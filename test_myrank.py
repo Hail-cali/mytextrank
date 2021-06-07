@@ -9,6 +9,7 @@ print(sys.argv[0])
 stopwords = [line.strip() for line in open('../stopwords/stopwordsKor.txt', 'r', encoding='utf-8')]
 mecab_path = "/Users/george/Desktop/dev_n/pakage_/mecab-0.996-ko-0.9.2/mecab-ko-dic-2.1.1-20180720"
 corpus = pd.read_csv('/Users/george/testData/food_saf.csv')
+
 doc_1 = '''
 영국의 작가 코난 도일이 쓴 추리 소설 셜록 홈즈 시리즈의 주인공. 현재까지 인간이 창조한 캐릭터 중에서 가장 성공한 인물 중 하나이다.
 [3] 양산 끝에 '그저 그런 기믹'에 불과하게 된 드라큘라와는 달리, 다양하게 재창조되었으나 원작자가 만든 고유의 인격과 독특한 매력을 
@@ -74,12 +75,15 @@ films, video games, and other media for over one hundred years.
 #데이터는 나무위키 셜록홈 자료즈
 text = doc_1
 text_2 = corpus['contents'][5]
-print(text_2)
+text_ = pd.read_csv('~/testData/seoul_city_complaints_2019_2021.csv')
+text_seoul = ''.join(text_['ask'])
+print(f'type {type(text_seoul)} {len(text_seoul)}')
+#print(text_2)
 stm = m.SimpleTextRank(STOPWORD=stopwords, MECABPATH=mecab_path)
-result_1 =stm.process(text)
-result_2 =stm.network_process(text)
+#result_1 =stm.process(text)
+result_2 =stm.network_process(text_seoul)
 print("="*20)
-print(f'scores : {result_1}')
+#print(f'scores : {result_1}')
 print(f'network scores: {result_2}')
 
 # a =stm._word_tokenize(text)
